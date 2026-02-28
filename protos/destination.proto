@@ -1,0 +1,23 @@
+
+
+syntax = "proto3";
+package meshScale;
+
+
+message Destination {
+    bytes public_key = 1;
+    enum DestinationDirection {
+        IN = 0;
+        OUT = 1;
+    }
+    DestinationDirection direction = 2;
+    enum DestinationType {
+        SINGLE = 0;
+        GROUP = 1;
+        PLAIN = 2;
+    }
+    DestinationType type = 3;
+    string app_name = 4;
+    string aspects = 5;
+    bytes hash = 6;
+}

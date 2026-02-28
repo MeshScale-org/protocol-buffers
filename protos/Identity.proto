@@ -1,0 +1,26 @@
+
+syntax = "proto3";
+package meshScale;
+
+message IdentityConfig {
+
+  oneof config_action
+  {
+    SetNodeIdent  set_node_ident  = 1;
+    SetClientDest set_client_dest = 2;
+    
+  }
+}
+
+message SetNodeIdent
+{
+  bool  enabled   = 1;
+  bytes priv_keys = 2;
+}
+
+message SetClientDest
+{
+  bool  remove      = 1; //if true, remove this destination, if false, add it
+  bytes client_dest = 2;
+}
+
