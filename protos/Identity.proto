@@ -2,25 +2,31 @@
 syntax = "proto3";
 package meshScale;
 
-message IdentityConfig {
+message IdentityAction {
 
   oneof config_action
   {
-    SetNodeIdent  set_node_ident  = 1;
-    SetClientDest set_client_dest = 2;
-    
+    SetIdentity set_identity = 1;
+    GetIdentity get_identity = 2;
+    ClearIdentity clear_identity = 3;
   }
 }
 
-message SetNodeIdent
+
+
+message SetIdentity
 {
-  bool  enabled   = 1;
-  bytes priv_keys = 2;
+  enum IdentityLocation {
+  MANAGER_SYSTEM = 0; //The full identity is stored on the device (standalone node)
+  CLIENT_EXTERNAL = 1; // Private keys are stored on client phone, request client to sign, encrypt, ... (untrusted firmware)
+  MANAGER_CLIENT = 2; //Private key is owned by client phone but a local copy was made for local signing (trusted firmware)
+  }
+
+  IdentityLocation identity_location = 1;
+  bytes public_keys = 2;
+  optional bytes private_keys = 3;
 }
 
-message SetClientDest
-{
-  bool  remove      = 1; //if true, remove this destination, if false, add it
-  bytes client_dest = 2;
-}
+message GetIdentity{}
 
+message ClearIdentity{}
