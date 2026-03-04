@@ -4,8 +4,29 @@ syntax = "proto3";
 package meshScale;
 
 // User sends/receives a text message in a chat
-message Announce {
-  bytes destination_hash = 1;
-  optional string destination_name = 2; //friendly name
+message AnnounceAction {
+  oneof action
+  {
+    SingleAnnounce single_announce = 1;
+    SetAutoAnnounceConfig set_auto_announce_config = 2;
+    GetAutoAnnounceConfig get_auto_announce_config = 3;
+    AutoAnnounceConfig auto_announce_config = 4;
+  }
 }
 
+//do a single announce
+message SingleAnnounce{}
+
+//auto announce config
+message SetAutoAnnounceConfig
+{
+  AutoAnnounceConfig auto_announce_config = 1;
+}
+
+message GetAutoAnnounceConfig{}
+
+
+message AutoAnnounceConfig
+{
+  uint32 interval = 1; //interval in seconds of to auto-announce
+}

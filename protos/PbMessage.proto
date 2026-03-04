@@ -3,19 +3,23 @@
 syntax = "proto3";
 package meshScale;
 
-import "UserChat.proto";
+
+
+import "Identity.proto";
 import "Announce.proto";
+import "Chat.proto";
 
 
 
 // Main protobuff message that can contain all other messages
-// field tags above 100 for internal/client communication
 message PbMessage {
     
-    oneof content {
-      Announce announce = 3;
-      UserChat userchat = 4;
-  };
+    oneof content
+    {
+        ChatAction chat_action = 50;
+        IdentityAction identity_action = 51;
+        AnnounceAction announce_action = 52;
+    };
 
     //for internal/client use
     optional Source local_source = 100;

@@ -3,30 +3,32 @@ syntax = "proto3";
 package meshScale;
 
 message IdentityAction {
-
-  oneof config_action
+  oneof action
   {
-    SetIdentity set_identity = 1;
-    GetIdentity get_identity = 2;
-    ClearIdentity clear_identity = 3;
+    GetIdentityConfig get_identity_config = 1;
+    SetIdentityConfig set_identity_config = 2;
+    IdentityConfig identity_config = 3;
   }
 }
 
+message GetIdentityConfig{}
 
-
-message SetIdentity
+message SetIdentityConfig
 {
-  enum IdentityLocation {
-  MANAGER_SYSTEM = 0; //The full identity is stored on the device (standalone node)
-  CLIENT_EXTERNAL = 1; // Private keys are stored on client phone, request client to sign, encrypt, ... (untrusted firmware)
-  MANAGER_CLIENT = 2; //Private key is owned by client phone but a local copy was made for local signing (trusted firmware)
-  }
+  IdentityConfig identity_config = 1;
+}
 
-  IdentityLocation identity_location = 1;
+message IdentityConfig
+{
+  enum IdentityType
+  {
+  LOCAL = 0; //The full identity is stored in firmware, client does not send messages (standalone node)
+  EXTERNAL = 1; //Client sends encrypted and signed packets over bluetooth, destination hash and public key stored in firmware (untrusted firmware)
+  LOCAL_COPY = 2; //Private key is owned by client phone but a local copy was made for local signing (trusted firmware)
+  }
+  IdentityType identity_location = 1;
+
   bytes public_keys = 2;
   optional bytes private_keys = 3;
 }
 
-message GetIdentity{}
-
-message ClearIdentity{}

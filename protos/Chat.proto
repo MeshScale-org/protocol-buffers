@@ -1,0 +1,28 @@
+
+
+syntax = "proto3";
+package meshScale;
+
+
+message ChatAction
+{
+  oneof action
+  {
+  Chat chat = 1;
+  SendChat send_chat = 2;
+  }
+}
+
+message SendChat
+{
+  bytes destination_hash = 1;
+  Chat chat = 2;
+}
+
+
+
+// User sends/receives a text message in a chat
+message Chat {
+  string text_string     = 2;
+}
+
