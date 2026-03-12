@@ -1,40 +1,19 @@
 
-
 syntax = "proto3";
 package meshScale;
 
-
-
-import "Identity.proto";
-import "Announce.proto";
-import "Chat.proto";
-
-
+import "Instruction.proto";
+import "event.proto";
+import "Source.proto";
 
 // Main protobuff message that can contain all other messages
 message PbMessage {
-    
-    oneof content
-    {
-        ChatAction chat_action = 50;
-        IdentityAction identity_action = 51;
-        AnnounceAction announce_action = 52;
-    };
 
-    //for internal/client use
-    optional Source local_source = 100;
-    optional uint64 timestamp_ms = 101; //timestamp in ms since epoch
-}
+  oneof content
+  {
+    Instruction instruction = 5;
+    Event event = 6;
+  };
 
-
-enum Source {
-    NONE = 0;
-    NETWORK = 1;
-    CLIENT = 2;
-
-    MANAGER_CLIENT = 10;
-    MANAGER_HARDWARE = 11;
-    MANAGER_NETWORK = 12;
-    MANAGER_SYSTEM = 13;
-    MANAGER_UI = 14;
+  optional Source source = 100; //Source of this pbMessage
 }

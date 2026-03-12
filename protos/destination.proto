@@ -4,20 +4,36 @@ syntax = "proto3";
 package meshScale;
 
 
-message Destination {
-    bytes public_key = 1;
-    enum DestinationDirection {
-        IN = 0;
-        OUT = 1;
+message Destination
+{
+  /*
+  Enums/messages for Instruction proto module
+  */
+  enum DestinationAttributes
+  {
+    DESTIANTION_HASH = 0;
+  }
+  message DestinationValues
+  {
+    oneof value
+    {
+      DestinationHash destination_hash = 1;
     }
-    DestinationDirection direction = 2;
-    enum DestinationType {
-        SINGLE = 0;
-        GROUP = 1;
-        PLAIN = 2;
-    }
-    DestinationType type = 3;
-    string app_name = 4;
-    string aspects = 5;
-    bytes hash = 6;
+  }
+  message DestinationCommands
+  {
+    /*
+     oneof command
+     {
+
+     }
+     */
+  }
+
+  // 16 byte array for a destination hash
+  message DestinationHash
+  {
+      bytes hash = 1;
+  }
 }
+

@@ -1,3 +1,15 @@
 
 
-//TODO: add identity proto options
+
+
+
+*.IdentityValues.value anonymous_oneof:true
+
+
+//*.IdentityCommands.command anonymous_oneof:true
+
+
+*.IdentityKeys.key max_size:64 fixed_length:true
+
+
+

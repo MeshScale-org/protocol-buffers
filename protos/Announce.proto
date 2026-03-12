@@ -1,32 +1,59 @@
 
-
 syntax = "proto3";
 package meshScale;
 
-// User sends/receives a text message in a chat
-message AnnounceAction {
-  oneof action
+import "Destination.proto";
+import "Identity.proto";
+
+message Announce
+{
+  /*
+  Enums/messages for Instruction proto module
+  */
+  enum AnnounceAttributes
   {
-    SingleAnnounce single_announce = 1;
-    SetAutoAnnounceConfig set_auto_announce_config = 2;
-    GetAutoAnnounceConfig get_auto_announce_config = 3;
-    AutoAnnounceConfig auto_announce_config = 4;
+    NONE = 0;
+    //auto-announce config attr
   }
-}
+  message AnnounceValues
+  {
+    /*
+    oneof value
+    {
+      //auto-announce config value
+    }
+      */
+  }
+  message AnnounceCommands
+  {
+    oneof command
+    {
+      DoAnnounceCommand do_announce_command = 1;
+    }
+  }
 
-//do a single announce
-message SingleAnnounce{}
+  //Announce once
+  message DoAnnounceCommand{}
 
-//auto announce config
-message SetAutoAnnounceConfig
-{
-  AutoAnnounceConfig auto_announce_config = 1;
-}
+  /*
+  Announce events
+  */
+  message AnnounceEvents
+  {
+    oneof announce_event
+    {
+      IncomingAnnounce incoming_announce = 5;
+    }
+  }
+  message IncomingAnnounce
+  {
+    Destination.DestinationHash destination_hash = 1;
+    Identity.IdentityKeys public_keys = 2;
+    // extra data like username
+    // random blob
+    // signature
+    // ...
+  }
+  
 
-message GetAutoAnnounceConfig{}
-
-
-message AutoAnnounceConfig
-{
-  uint32 interval = 1; //interval in seconds of to auto-announce
 }

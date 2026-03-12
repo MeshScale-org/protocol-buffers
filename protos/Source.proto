@@ -1,0 +1,29 @@
+
+
+syntax = "proto3";
+package meshScale;
+
+import "Destination.proto";
+
+message Source
+{
+    oneof source
+    {
+      LocalSource local_source = 3; //from a local source
+      Destination.DestinationHash destination_hash = 4; //from a destination on the network
+    }
+
+    enum LocalSource {
+    NONE    = 0; //unknown
+    NETWORK = 1; //from network without extra info
+    CLIENT  = 2; //from a client without extra info
+
+    MANAGER_CLIENT   = 10;
+    MANAGER_HARDWARE = 11;
+    MANAGER_NETWORK  = 12;
+    MANAGER_SYSTEM   = 13;
+    MANAGER_UI       = 14;
+  }
+}
+
+

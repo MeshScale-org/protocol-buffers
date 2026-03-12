@@ -2,33 +2,53 @@
 syntax = "proto3";
 package meshScale;
 
-message IdentityAction {
-  oneof action
-  {
-    GetIdentityConfig get_identity_config = 1;
-    SetIdentityConfig set_identity_config = 2;
-    IdentityConfig identity_config = 3;
-  }
-}
-
-message GetIdentityConfig{}
-
-message SetIdentityConfig
+message Identity
 {
-  IdentityConfig identity_config = 1;
-}
-
-message IdentityConfig
-{
-  enum IdentityType
+  /*
+  Enums/messages for Instruction proto module
+  */
+  enum IdentityAttributes
   {
-  LOCAL = 0; //The full identity is stored in firmware, client does not send messages (standalone node)
-  EXTERNAL = 1; //Client sends encrypted and signed packets over bluetooth, destination hash and public key stored in firmware (untrusted firmware)
-  LOCAL_COPY = 2; //Private key is owned by client phone but a local copy was made for local signing (trusted firmware)
+    PUBLIC_KEYS = 0;
+    IDENTITY_CONFIG = 1;
   }
-  IdentityType identity_location = 1;
+  message IdentityValues
+  {
+    oneof value
+    {
+      IdentityKeys public_key = 1;
+      IdentityConfig identity_config = 2;
+    }
+  }
+  message IdentityCommands
+  {
+    /*
+    oneof command
+    {
+    }
+    */
+  }
 
-  bytes public_keys = 2;
-  optional bytes private_keys = 3;
+  message IdentityConfig
+  {
+    enum IdentityType
+    {
+    LOCAL = 0; //The full identity is stored in firmware, client does not send messages (standalone node)
+    EXTERNAL = 1; //Client sends encrypted and signed packets over bluetooth, destination hash and public key stored in firmware (untrusted firmware)
+    LOCAL_COPY = 2; //Private key is owned by client phone but a local copy was made for local signing (trusted firmware)
+    }
+    IdentityType identity_location = 1;
+
+    IdentityKeys public_keys = 2;
+    optional IdentityKeys private_keys = 3;
+  }
+
+  // 64 byte array for 32 byte encryption and 32 byte signing key combined
+  // can be public or private part of encr. and sign. keys
+  message IdentityKeys
+  {
+    bytes key = 1;
+  }
+
+
 }
-

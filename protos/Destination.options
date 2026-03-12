@@ -1,0 +1,17 @@
+
+
+
+
+
+
+*.DestinationValues.value anonymous_oneof:true
+
+
+
+
+
+*.DestinationHash.hash max_size:16 fixed_length:true
+
+
+
+//*.DestinationCommands.Command anonymous_oneof:true

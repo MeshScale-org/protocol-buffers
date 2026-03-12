@@ -1,0 +1,25 @@
+
+
+
+
+*.Instruction.instruction anonymous_oneof:true
+
+
+
+
+*.Attribute.proto_module anonymous_oneof:true
+
+
+
+
+*.Value.proto_module anonymous_oneof:true
+
+
+
+
+*.Command.proto_module anonymous_oneof:true
+
+
+
+
+//*.CommandParams.proto_module anonymous_oneof:true

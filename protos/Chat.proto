@@ -3,26 +3,26 @@
 syntax = "proto3";
 package meshScale;
 
+import "Destination.proto";
 
-message ChatAction
+message Chat
 {
-  oneof action
+
+  message ChatCommands
   {
-  Chat chat = 1;
-  SendChat send_chat = 2;
+    oneof command
+    {
+      SendChat send_chat = 1;
+    }
+  }
+
+  message SendChat
+  {
+    string text_string     = 2;
+    Destination.DestinationHash destination_hash = 3;
   }
 }
 
-message SendChat
-{
-  bytes destination_hash = 1;
-  Chat chat = 2;
-}
 
 
-
-// User sends/receives a text message in a chat
-message Chat {
-  string text_string     = 2;
-}
 

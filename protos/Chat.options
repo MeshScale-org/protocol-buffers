@@ -1,5 +1,14 @@
 
-meshScale.SendChat.destination_hash max_size:16 fixed_length:true
-meshScale.Chat.text_string max_size:40;
+
+
+
+
+*.ChatCommands.command anonymous_oneof:true
+
+
+
+
+*.SendChat.text_string max_length:40;
+
 
 
