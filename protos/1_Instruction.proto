@@ -1,0 +1,115 @@
+
+syntax = "proto3";
+package meshScale;
+
+import "3_Identity.proto";
+import "3_Destination.proto";
+import "3_Announce.proto";
+import "3_Chat.proto";
+
+import "5_Source.proto";
+
+/*
+ * Request to Get or Set the value of an attribute
+ * Request to Execute a command
+ */
+message Instruction
+{
+  Source requester = 4; //Source of the request and the destination of the response of the instruction
+  oneof instruction
+  {
+    GetReq   get_req   = 5;
+    GetResp  get_resp  = 6;
+    SetReq   set_req   = 7;
+    SetResp  set_resp  = 8;
+    ExecReq  exec_req  = 9;
+    ExecResp exec_resp = 10;
+  }
+
+  /*
+   * Get attribute
+   */
+  message GetReq
+  {
+    Attribute attribute = 1;
+  }
+  message GetResp
+  {
+    ResponseStatus response_status = 1;
+    optional Value value           = 2;
+  }
+
+  /*
+   * Set attribute
+   */
+  message SetReq
+  {
+    Attribute attribute         = 1;
+    Value     value             = 2;
+    bool      want_confirmation = 3;
+  }
+  message SetResp
+  {
+    ResponseStatus response_status = 1;
+  }
+
+  /*
+   * Execute a command
+   */
+  message ExecReq
+  {
+    Command command           = 1;
+    bool    want_confirmation = 2;
+  }
+  message ExecResp
+  {
+    ResponseStatus response_status = 1;
+  }
+
+  //Possible attributes to be get or set
+  //Must have a corresponding value
+  message Attribute
+  {
+    oneof proto_module
+    {
+      Identity.IdentityAttributes       identity_attributes    = 5;
+      Announce.AnnounceAttributes       announce_attributes    = 6;
+      Destination.DestinationAttributes destination_attributes = 7;
+    }
+  }
+
+  //The value of the get/set attribute
+  message Value
+  {
+    oneof proto_module
+    {
+      Identity.IdentityValues       identity_values    = 5;
+      Announce.AnnounceValues       announce_values    = 6;
+      Destination.DestinationValues destination_values = 7;
+    }
+  }
+
+  //Possible proto modules that have a commands
+  message Command
+  {
+    oneof proto_module
+    {
+      Identity.IdentityCommands       identity_commands    = 5;
+      Announce.AnnounceCommands       announce_commands    = 6;
+      Destination.DestinationCommands destination_commands = 7;
+      Chat.ChatCommands               chat_commands        = 8;
+    }
+  }
+
+  //feedback on a request-reponse instruction
+  enum ResponseStatus
+  {
+    NONE    = 0; //no error
+    SUCCES  = 1; //Succes
+    ERROR   = 2; //General error
+    UNKNOWN = 3; // Attribute or command is N/A
+    DENIED  = 4; //not allowed
+    UNABLE  = 5; // Correct and allowed attribute/command but unable
+    //...
+  }
+}

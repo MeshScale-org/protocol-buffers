@@ -1,26 +1,18 @@
 
-
 syntax = "proto3";
 package meshScale;
 
-
-import "Announce.proto";
-import "Source.proto";
-
+import "3_Announce.proto";
+import "5_Source.proto";
 
 //General event container
 //e.g. incoming announce, message, user input, ...
 message Event
 {
-    Source event_source = 4;
+  Source event_source = 4;
     //all possible proto modules that have events defined
-    oneof proto_module
-    {
-        Announce.AnnounceEvents announce_events = 5;
-    }
+  oneof proto_module
+  {
+    Announce.AnnounceEvents announce_events = 5;
+  }
 }
-
-
-
-
-

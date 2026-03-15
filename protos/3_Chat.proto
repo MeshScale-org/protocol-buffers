@@ -1,9 +1,8 @@
 
-
 syntax = "proto3";
 package meshScale;
 
-import "Destination.proto";
+import "3_Destination.proto";
 
 message Chat
 {
@@ -18,11 +17,7 @@ message Chat
 
   message SendChat
   {
-    string text_string     = 2;
+    string                      text_string      = 2;
     Destination.DestinationHash destination_hash = 3;
   }
 }
-
-
-
-

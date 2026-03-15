@@ -2,14 +2,14 @@
 syntax = "proto3";
 package meshScale;
 
-import "Destination.proto";
-import "Identity.proto";
+import "3_Destination.proto";
+import "3_Identity.proto";
 
 message Announce
 {
   /*
-  Enums/messages for Instruction proto module
-  */
+   Enums/messages for Instruction proto module
+   */
   enum AnnounceAttributes
   {
     NONE = 0;
@@ -18,11 +18,11 @@ message Announce
   message AnnounceValues
   {
     /*
-    oneof value
-    {
-      //auto-announce config value
-    }
-      */
+     oneof value
+     {
+     //auto-announce config value
+     }
+     */
   }
   message AnnounceCommands
   {
@@ -36,8 +36,8 @@ message Announce
   message DoAnnounceCommand{}
 
   /*
-  Announce events
-  */
+   Announce events
+   */
   message AnnounceEvents
   {
     oneof announce_event
@@ -48,12 +48,11 @@ message Announce
   message IncomingAnnounce
   {
     Destination.DestinationHash destination_hash = 1;
-    Identity.IdentityKeys public_keys = 2;
+    Identity.IdentityKeys       public_keys      = 2;
     // extra data like username
     // random blob
     // signature
     // ...
   }
-  
 
 }

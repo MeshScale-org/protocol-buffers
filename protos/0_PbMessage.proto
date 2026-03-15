@@ -2,14 +2,14 @@
 syntax = "proto3";
 package meshScale;
 
-import "Instruction.proto";
-import "event.proto";
+import "1_Instruction.proto";
+import "1_event.proto";
 
 // Main protobuff message that can contain all other messages
 message PbMessage {
   oneof content
   {
     Instruction instruction = 5;
-    Event event = 6;
+    Event       event       = 6;
   };
 }
