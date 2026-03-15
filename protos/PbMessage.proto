@@ -4,16 +4,12 @@ package meshScale;
 
 import "Instruction.proto";
 import "event.proto";
-import "Source.proto";
 
 // Main protobuff message that can contain all other messages
 message PbMessage {
-
   oneof content
   {
     Instruction instruction = 5;
     Event event = 6;
   };
-
-  optional Source source = 100; //Source of this pbMessage
 }

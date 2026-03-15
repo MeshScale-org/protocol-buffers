@@ -15,7 +15,7 @@ import "Source.proto";
 */
 message Instruction
 {
-  Source instruction_source = 4; //Source of the request and the destination of the response
+  Source requester = 4; //Source of the request and the destination of the response of the instruction
   oneof instruction
   {
     GetReq get_req = 5;
